@@ -38,3 +38,9 @@ build/
 .DS_Store
 
 .idea/
+
+# Maven
+target/
+
+# Cucumber reports (if inside target)
+**/target/
