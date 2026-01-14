@@ -22,10 +22,8 @@ public class LoginSteps {
     private String dashboardUrl;
     private String username;
     private String password;
-    private String lastError;
-    private String currentUrl;
     private String loginPageUrl;
-    private WebDriver driver;
+    public WebDriver driver;
 
     @Before
     public void loadConfig() {
@@ -107,6 +105,13 @@ public class LoginSteps {
 
     @Then("I should see error message {string}")
     public void i_should_see_error_message(String expected) {
-        Assert.assertEquals(lastError, expected, "Expected specific validation message");
+        try {
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            String errmsg = driver.findElement(By.xpath("//p[contains(@class,'text-destructive')]")).getText();
+            Assert.assertTrue(errmsg.contains(expected) , "Error message should indicate missing password or invalid credentials");
+            System.out.println("Captured error message: " + errmsg);
+        } catch (Exception e) {
+            throw new RuntimeException("Error capturing validation message", e);
+        }
     }
 }
