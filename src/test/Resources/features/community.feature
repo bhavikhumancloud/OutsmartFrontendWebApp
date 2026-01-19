@@ -8,8 +8,9 @@ Feature: Community management
     When I click the "community" tab
 
   Scenario: Create a community successfully
-    When I create a community with name "Community A" and description "First community"
-    Then I should see community "Community A" in the community list
+#    When I create a community with name "Community A" and description "First community"
+    When I create communities from csv "testdata/community.csv"
+    Then I should see community in the community list
 
   Scenario: Fail to create community when name is missing
     When I create a community with name "" and description "No name"
